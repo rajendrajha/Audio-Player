@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Player</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100&family=Manrope:wght@200&family=Playfair+Display&family=Raleway:wght@100;400&family=Ubuntu:ital,wght@1,300&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('images/music.jpg');
+            background-size: cover;
+        }
+
+        .con2 img {
+            height: 100px;
+            width: 100px;
+        }
+
+        .con2 {
+            color: #000000;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            border: 2px solid royalblue;
+            color: aliceblue;
+            background-color: black;
+            width: 500px;
+            float: left;
+        }
+
+        .con2 span {
+            padding: 13px 23px;
+        }
+
+        .con2 span i {
+            cursor: pointer;
+        }
+
+        .con1 p {
+            color: rgb(255, 255, 255);
+            font-size: 35px;
+            font-family: 'Ubuntu', sans-serif;
+        }
+
+        .con1 {
+            min-height: 69vh;
+        }
+
+        #masterplay {
+            color: aliceblue;
+            margin-left: 600px;
+            cursor: pointer;
+        }
+
+
+        @media only screen and (max-width:821px) {
+            input[type=range] {
+                width: 500px;
+            }
+
+            body {
+                background: none;
+            }
+
+            .con1 p {
+                color: black;
+            }
+
+            #masterplay {
+                color: rgb(0, 0, 0);
+                margin-left: 250px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="con1">
+        <p>
+            Effects
+        </p>
+        <div class="con2">
+            <img src="images/space.jpg" class="con2 img">
+            <span>Space Adventure Intro</span><span>
+                0:36
+            </span>
+            <span>
+                <i id="1" class="fa-solid song fa-4px fa-play" id="play2"></i>
+            </span>
+
+        </div>
+        <div class="con2">
+            <img src="images/Dark.jpg" class="con2 img">
+            <span>Darkness arrives</span><span>
+                1:19
+            </span>
+            <span>
+                <i id='2' class="fa-solid song fa-4px fa-play" id="play3"></i>
+            </span>
+
+        </div>
+        <div class="con2">
+            <img src="images/news.jpg" class="con2 img">
+            <span>Trusted News v3</span><span>
+                0:40
+            </span>
+            <span>
+                <i id="3" class="fa-solid song fa-4px fa-play" id="play4"></i>
+            </span>
+        </div>
+        <div class="con2">
+            <img src="images/tree.jpg" class="con2 img">
+            <span>Happy Tree</span><span>
+                0:30
+            </span>
+            <span>
+                <i id='4' class="fa-solid song fa-4px fa-play" id="play5"></i>
+            </span>
+        </div>
+        <div class="con2">
+            <img src="images/track.jpg" class="con2 img">
+            <span>Track A</span><span>
+                0:30
+            </span>
+            <span>
+                <i id='5' class="fa-solid song fa-4px fa-play" id="play6"></i>
+            </span>
+        </div>
+        <div class="con2">
+            <img src="images/tensin.png" class="con2 img">
+            <span>Tension</span><span>
+                0:39
+            </span>
+            <span>
+                <i id='6' class="fa-solid song fa-4px fa-play" id="play7"></i>
+            </span>
+        </div>
+        <div class="con2">
+            <img src="images/ZEN.jpg" class="con2 img">
+            <span>Ras</span><span>
+                0:50
+            </span>
+            <span>
+                <i id='7' class="fa-solid song fa-4px fa-play" id="play8"></i>
+            </span>
+        </div>
+        <input type="range" value="0" id="bar">
+        
+
+    </div>
+    <script>
+        console.log("Lets start the app");
+        let mplay = document.getElementById('masterplay');
+        let bar = document.getElementById('bar');
+        let play2 = document.getElementById('play2');
+        let play3 = document.getElementById('play3');
+        let play4 = document.getElementById('play4');
+        let play5 = document.getElementById('play5');
+        let play6 = document.getElementById('play6');
+        let play7 = document.getElementById('play7');
+        let audio1 = new Audio('1.mp3');
+        let audio2 = new Audio('2.mp3')
+
+        
+        const playElement = () => {
+            Array.from(document.getElementsByClassName('song')).forEach((element) => {
+                element.classList.remove('fa-pause')
+                element.classList.add('fa-play')
+            })
+        }
+
+        Array.from(document.getElementsByClassName('song')).forEach((element) => {
+            element.addEventListener('click', (e) => {
+                index = parseInt(e.target.id)
+                playElement();
+                e.target.classList.remove('fa-play')
+                e.target.classList.add('fa-pause')
+                audio1.src = `${index}.mp3`;
+                audio1.currentTime = 0;
+                audio1.play();
+            })
+        })
+audio1.addEventListener('timeupdate',()=>{
+    value= parseInt((audio1.currentTime/audio1.duration)*100)
+    bar.value= value;
+    console.log(value);
+})
+bar.addEventListener('change',()=>{
+    audio1.currentTime= bar.value*audio1.duration/100
+})
+
+    </script>
+    <script src="https://kit.fontawesome.com/05dc98bb0c.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
